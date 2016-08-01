@@ -12,7 +12,6 @@ node("slave") {
     
     stage "test"
 
-    dir "./tests"
     def commandToRun = "oscript finder.os";
     echo pwd
     echo "${commandToRun}" 
