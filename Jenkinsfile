@@ -12,15 +12,14 @@ node("slave") {
     
     stage "test"
 
-    def commandToRun = "oscript finder.os";
-    echo pwd
-    echo "${commandToRun}" 
-
-    if (isUnix){
-        sh "pushd ./tests/ \n${commandToRun}\npopd"
-    } else {
-        bat "chcp 1251\npushd ./tests/ \n${commandToRun}\npopd"
+    def commandToRun = "oscript -encoding=utf-8 finder.os";
+    dir('tests') {
+        if (isUnix){
+            sh "${commandToRun}"
+        } else {
+            bat "${commandToRun}"
+        }    
     }
-    
+
     step([$class: 'JUnitResultArchiver', testResults: '**/tests/*.xml'])
 }
